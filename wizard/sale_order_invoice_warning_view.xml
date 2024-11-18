@@ -1,0 +1,20 @@
+<odoo>
+    <record id="view_sale_order_invoice_warning" model="ir.ui.view">
+        <field name="name">sale.order.invoice.warning.form</field>
+        <field name="model">sale.order.invoice.warning</field>
+        <field name="arch" type="xml">
+            <form string="Warning">
+                <sheet>
+                    <!-- <label string="Warning" colspan="4"/> -->
+                    <div>
+                        <field name="message" readonly="1" nolabel="1"/>
+                    </div>
+                    <footer>
+                        <button string="Cancel Order" type="object" name="action_confirm_cancel" class="btn-primary"/>
+                        <button string="Abort" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

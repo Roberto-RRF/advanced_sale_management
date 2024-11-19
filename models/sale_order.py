@@ -32,6 +32,6 @@ class SaleOrder(models.Model):
                         }
                     }
                 else:
-                    inv.write({'state':'cancel'})
+                    inv.button_cancel()
             # If no confirmed invoices, proceed with normal cancellation
         return super(SaleOrder, self).action_cancel()

@@ -18,18 +18,20 @@ class SaleOrder(models.Model):
             return result
 
         for order in self:
-            invoices = order.invoice_ids.filtered(lambda inv: inv.state not in ('cancel', 'draft'))
-            if invoices.l10n_mx_edi_cfdi_state == 'sent':
-                return {
-                    'name': 'Invoice Warning',
-                    'type': 'ir.actions.act_window',
-                    'res_model': 'sale.order.invoice.warning',
-                    'view_mode': 'form',
-                    'target': 'new',
-                    'context': {
-                        'default_message': _("This sales order has confirmed invoices linked to it."),
-                        'active_id': order.id,
+            for inv in order.invoice_ids>
+                if inv.l10n_mx_edi_cfdi_state == 'sent':
+                    return {
+                        'name': 'Invoice Warning',
+                        'type': 'ir.actions.act_window',
+                        'res_model': 'sale.order.invoice.warning',
+                        'view_mode': 'form',
+                        'target': 'new',
+                        'context': {
+                            'default_message': _("This sales order has confirmed invoices linked to it."),
+                            'active_id': order.id,
+                        }
                     }
-                }
-        # If no confirmed invoices, proceed with normal cancellation
+                else:
+                    inv.write({'state':'cancel'})
+            # If no confirmed invoices, proceed with normal cancellation
         return super(SaleOrder, self).action_cancel()

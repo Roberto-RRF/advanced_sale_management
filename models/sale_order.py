@@ -18,7 +18,7 @@ class SaleOrder(models.Model):
             return result
 
         for order in self:
-            for inv in order.invoice_ids>
+            for inv in order.invoice_ids:
                 if inv.l10n_mx_edi_cfdi_state == 'sent':
                     return {
                         'name': 'Invoice Warning',

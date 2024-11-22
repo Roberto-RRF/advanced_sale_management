@@ -11,7 +11,8 @@ class SaleOrder(models.Model):
             # Proceed with normal cancellation if force_cancel is in context
             for inv in order.invoice_ids:
                 if not inv.l10n_mx_edi_cfdi_state == 'sent':
-                    inv.write({'state':'cancel'})
+                    inv.button_draft()
+                    inv.button_cancel()
             result = super(SaleOrder, self)._action_cancel()
 
             _logger.info("Sale Order %s state after cancellation attempt: %s", self.name, self.state)
@@ -32,6 +33,7 @@ class SaleOrder(models.Model):
                         }
                     }
                 else:
+                    inv.button_draft()
                     inv.button_cancel()
             # If no confirmed invoices, proceed with normal cancellation
         return super(SaleOrder, self).action_cancel()

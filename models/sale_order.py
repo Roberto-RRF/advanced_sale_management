@@ -31,6 +31,7 @@ class SaleOrder(models.Model):
                         }
                     }
             for inv in order.invoice_ids:
-                inv.button_draft()
-                inv.button_cancel()
+                if not inv.l10n_mx_edi_cfdi_state:
+                    inv.button_draft()
+                    inv.button_cancel()
         return super(SaleOrder, self).action_cancel()

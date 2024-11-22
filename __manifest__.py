@@ -6,8 +6,8 @@
     'description': """
     """,
     'data': [
-        'security/ir.model.access.csv',
-        'wizard/sale_order_invoice_warning_view.xml',
+        'wizard/sale_order_confirm_wizard.xml',
+        'security/ir.model.access.csv'
     ],
     'images': ['static/description/icon.png'],
     'installable': True,

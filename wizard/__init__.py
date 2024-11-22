@@ -1,1 +1,1 @@
-from . import sale_order_invoice_warning
+from . import sale_order_cancel

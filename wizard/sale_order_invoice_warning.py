@@ -7,7 +7,7 @@ class SaleOrderInvoiceWarning(models.TransientModel):
     message = fields.Text(
         string="Message",
         readonly=True,
-        default=_("This sales order has confirmed invoices linked to it. Are you sure you want to proceed with cancellation?")
+        default=_("Esta orden de venta tiene una factura asociada que esta timbrada. ¿Quiere cancelar la orden de venta?")
     )
 
     def action_confirm_cancel(self):

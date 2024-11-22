@@ -6,11 +6,9 @@ class SaleOrder(models.Model):
 
     def action_cancel(self):
         if self.env.context.get('force_cancel'):
-            # Log for debugging
             _logger.info("Force cancel triggered for Sale Order %s", self.name)
-            # Proceed with normal cancellation if force_cancel is in context
             for inv in order.invoice_ids:
-                if not inv.l10n_mx_edi_cfdi_state == 'sent':
+                if not inv.l10n_mx_edi_cfdi_state:
                     inv.button_draft()
                     inv.button_cancel()
             result = super(SaleOrder, self)._action_cancel()
@@ -28,12 +26,11 @@ class SaleOrder(models.Model):
                         'view_mode': 'form',
                         'target': 'new',
                         'context': {
-                            'default_message': _("This sales order has confirmed invoices linked to it."),
+                            'default_message': _("Esta orden de venta tiene una factura asociada que esta timbrada. ¿Quiere cancelar la orden de venta?"),
                             'active_id': order.id,
                         }
                     }
-                else:
-                    inv.button_draft()
-                    inv.button_cancel()
-            # If no confirmed invoices, proceed with normal cancellation
+            for inv in order.invoice_ids:
+                inv.button_draft()
+                inv.button_cancel()
         return super(SaleOrder, self).action_cancel()
